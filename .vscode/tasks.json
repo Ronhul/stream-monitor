@@ -25,7 +25,7 @@
     {
       "label": "Start StreamMonitor (WSL Compatible)",
       "type": "shell",
-      "command": "./run-in-wsl.sh",
+      "command": "npm run start-js",
       "group": "build",
       "isBackground": true,
       "problemMatcher": {
@@ -90,6 +90,17 @@
       "type": "shell",
       "command": "npm install",
       "group": "none"
+    },
+    {
+      "label": "Deploy to GitHub Pages",
+      "type": "shell",
+      "command": "./deploy.sh",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "clear": true
+      }
     }
   ]
 }

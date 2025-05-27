@@ -52,13 +52,7 @@ npm run start-js
 ```
 This approach uses a custom Node.js script that works across all platforms including WSL.
 
-**Option 2: Use the WSL-specific script**
-```bash
-./run-in-wsl.sh
-```
-This script includes special path handling for WSL environments.
-
-**Option 3: Use the direct Node approach**
+**Option 2: Use the direct Node approach**
 ```bash
 npm run start-wsl
 ```
@@ -78,6 +72,21 @@ Press `Ctrl+Shift+P`, select "Tasks: Run Task", then choose "Start StreamMonitor
 ### GitHub Pages
 
 This app can be deployed to GitHub Pages using the following steps:
+
+#### Option 1: Using the Deployment Script (Recommended)
+
+Run the provided deployment script which will guide you through the process:
+```bash
+./deploy.sh
+```
+
+This script will:
+- Check for pending changes
+- Prompt for your GitHub username if needed
+- Update the package.json file automatically
+- Build and deploy to GitHub Pages
+
+#### Option 2: Manual Deployment
 
 1. Update the `homepage` field in `package.json` to match your GitHub username:
    ```json

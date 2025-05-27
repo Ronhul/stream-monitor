@@ -1,31 +1,18 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './StreamTile.css';
-import useAudioAnalyzer from '../hooks/useAudioAnalyzer';
 
 const StreamTile = ({ stream, onRemove, onToggleAudio }) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  // Get audio levels from custom hook
-  const { audioLevels, setAudioSource, simulateLevels, stopSimulation } = useAudioAnalyzer();
 
-  useEffect(() => {
+  // Initialize stream on mount or when URL/type changes
+  React.useEffect(() => {
     if (videoRef.current) {
       // Different setup based on stream type
       setupStream();
-      
-      // Enable simulation for audio visualization
-      simulateLevels(!stream.muted);
     }
-    
-    // Clean up when component unmounts or stream changes
-    return () => {
-      stopSimulation();
-    };
-  }, [stream.url, stream.type, simulateLevels, stopSimulation, stream.muted]);
-  
-  // We don't need this second useEffect anymore since we've integrated mute state into the main useEffect
+  }, [stream.url, stream.type]);
 
   const setupStream = () => {
     setIsLoading(true);
@@ -149,20 +136,6 @@ const StreamTile = ({ stream, onRemove, onToggleAudio }) => {
           >
             ❌
           </button>
-        </div>
-        
-        {/* Audio level visualization */}
-        <div className="audio-levels">
-          {audioLevels.map((level, i) => (
-            <div 
-              key={i} 
-              className="level-bar" 
-              style={{ 
-                height: `${level * 100}%`,
-                backgroundColor: `hsl(${120 - level * 120}, 100%, 50%)`
-              }}
-            />
-          ))}
         </div>
       </div>
       

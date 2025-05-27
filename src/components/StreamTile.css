@@ -46,6 +46,7 @@
   background: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   padding: 2px;
+  z-index: 10;
 }
 
 .level-bar {
@@ -53,6 +54,7 @@
   margin-bottom: 1px;
   transition: height 0.05s ease-out;
   min-height: 2px;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
 }
 
 .stream-controls {

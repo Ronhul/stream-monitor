@@ -4,26 +4,28 @@ import useAudioAnalyzer from '../hooks/useAudioAnalyzer';
 
 const StreamTile = ({ stream, onRemove, onToggleAudio }) => {
   const videoRef = useRef(null);
-  const audioRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   
   // Get audio levels from custom hook
-  const { audioLevels, setAudioSource } = useAudioAnalyzer();
+  const { audioLevels, setAudioSource, simulateLevels, stopSimulation } = useAudioAnalyzer();
 
   useEffect(() => {
-    const setupAudio = () => {
-      if (audioRef.current && videoRef.current) {
-        setAudioSource(audioRef.current);
-      }
-    };
-
     if (videoRef.current) {
       // Different setup based on stream type
       setupStream();
-      setupAudio();
+      
+      // Enable simulation for audio visualization
+      simulateLevels(!stream.muted);
     }
-  }, [stream.url, stream.type]);
+    
+    // Clean up when component unmounts or stream changes
+    return () => {
+      stopSimulation();
+    };
+  }, [stream.url, stream.type, simulateLevels, stopSimulation, stream.muted]);
+  
+  // We don't need this second useEffect anymore since we've integrated mute state into the main useEffect
 
   const setupStream = () => {
     setIsLoading(true);
@@ -129,9 +131,6 @@ const StreamTile = ({ stream, onRemove, onToggleAudio }) => {
         <div className="video-container">
           {renderStreamSource()}
         </div>
-
-        {/* Audio element for analyzing sound levels */}
-        <audio ref={audioRef} style={{ display: 'none' }} />
         
         {/* Stream controls */}
         <div className="stream-controls">

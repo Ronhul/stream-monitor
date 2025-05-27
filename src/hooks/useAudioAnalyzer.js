@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 // Custom hook to analyze audio and provide visualization data
 const useAudioAnalyzer = () => {
@@ -10,6 +10,8 @@ const useAudioAnalyzer = () => {
   const analyzerRef = useRef(null);
   const sourceRef = useRef(null);
   const animationFrameRef = useRef(null);
+  const simulationFrameRef = useRef(null);
+  const isSimulatingRef = useRef(false);
   
   // Initialize audio context and analyzer when hook is first used
   useEffect(() => {
@@ -29,6 +31,10 @@ const useAudioAnalyzer = () => {
     return () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
+      }
+      
+      if (simulationFrameRef.current) {
+        cancelAnimationFrame(simulationFrameRef.current);
       }
       
       if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
@@ -96,7 +102,64 @@ const useAudioAnalyzer = () => {
     animationFrameRef.current = requestAnimationFrame(updateLevels);
   };
   
-  return { audioLevels, setAudioSource };
+  // Function to simulate audio levels for iframe streams where we can't access audio
+  const simulateLevels = useCallback((active = true) => {
+    // Stop any existing simulation
+    if (simulationFrameRef.current) {
+      cancelAnimationFrame(simulationFrameRef.current);
+      simulationFrameRef.current = null;
+    }
+    
+    // Stop real audio analysis if it's running
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
+    
+    // If not active, set all levels to 0 and return
+    if (!active) {
+      setAudioLevels(Array(16).fill(0));
+      isSimulatingRef.current = false;
+      return;
+    }
+    
+    isSimulatingRef.current = true;
+    
+    // Function to generate realistic looking audio levels
+    const simulateFrame = () => {
+      // Generate realistic looking audio levels between 0.1 and 0.8
+      const newLevels = Array(16).fill(0).map(() => {
+        // Base value
+        const baseValue = Math.random() * 0.4 + 0.05;
+        
+        // Add some peaks occasionally for realism
+        const isPeak = Math.random() > 0.85;
+        const peak = isPeak ? Math.random() * 0.3 : 0;
+        
+        return Math.min(0.8, baseValue + peak);
+      });
+      
+      setAudioLevels(newLevels);
+      simulationFrameRef.current = requestAnimationFrame(simulateFrame);
+    };
+    
+    simulationFrameRef.current = requestAnimationFrame(simulateFrame);
+  }, []);
+  
+  // Function to stop simulation
+  const stopSimulation = useCallback(() => {
+    if (simulationFrameRef.current) {
+      cancelAnimationFrame(simulationFrameRef.current);
+      simulationFrameRef.current = null;
+    }
+    
+    if (isSimulatingRef.current) {
+      setAudioLevels(Array(16).fill(0));
+      isSimulatingRef.current = false;
+    }
+  }, []);
+  
+  return { audioLevels, setAudioSource, simulateLevels, stopSimulation };
 };
 
 export default useAudioAnalyzer;

@@ -1,50 +1,78 @@
-.add-stream-form {
-  width: 100%;
-  height: 100%;
-  background-color: #2a2a2a;
-  border-radius: 8px;
-  padding: 20px;
+/* Modal Styles */
+.add-stream-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: all 0.3s ease;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
 }
 
-.add-stream-form.collapsed {
-  background-color: rgba(50, 50, 50, 0.3);
-}
-
-.add-stream-form.expanded {
+.add-stream-modal {
   background-color: #2a2a2a;
+  border-radius: 8px;
+  padding: 25px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  animation: modalFadeIn 0.3s ease;
 }
 
-.add-stream-form h3 {
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.add-stream-modal h3 {
   margin-top: 0;
   margin-bottom: 20px;
   color: #61dafb;
+  text-align: center;
 }
 
-.expand-button {
+/* Add Stream Button Styles */
+.add-stream-button {
   background-color: #61dafb;
   color: #121212;
   border: none;
   border-radius: 4px;
-  padding: 12px 20px;
+  padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
 }
 
-.expand-button:hover {
+.add-stream-button:hover {
   background-color: #4fa8c9;
   transform: scale(1.05);
 }
 
-.add-stream-form.disabled {
+.add-stream-button svg {
+  margin-right: 8px;
+}
+
+.add-stream-button.disabled {
+  background-color: rgba(97, 218, 251, 0.5);
+  cursor: not-allowed;
+}
+
+/* Apply to modal when disabled */
+.add-stream-modal.disabled {
   background-color: rgba(50, 50, 50, 0.3);
   color: #888;
   justify-content: center;

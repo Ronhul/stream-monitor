@@ -2,7 +2,7 @@
   "name": "stream-monitor",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://USERNAME.github.io/StreamMonitor",
+  "homepage": "https://ronhul.github.io/StreamMonitor",
   "dependencies": {
     "cross-env": "^7.0.3",
     "react": "^19.0.0",

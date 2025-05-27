@@ -1,0 +1,5 @@
+# This file specifies GitHub Pages behavior
+# Allow embedding from YouTube, Twitch, and Telegram
+/*
+  Access-Control-Allow-Origin: *
+  X-Frame-Options: ALLOW-FROM https://www.youtube.com https://player.twitch.tv https://t.me

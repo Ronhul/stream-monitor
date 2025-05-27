@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/StreamMonitor/static/css/main.fae1b40f.css",
+    "main.js": "/StreamMonitor/static/js/main.8cdac222.js",
+    "index.html": "/StreamMonitor/index.html",
+    "main.fae1b40f.css.map": "/StreamMonitor/static/css/main.fae1b40f.css.map",
+    "main.8cdac222.js.map": "/StreamMonitor/static/js/main.8cdac222.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fae1b40f.css",
+    "static/js/main.8cdac222.js"
+  ]
+}

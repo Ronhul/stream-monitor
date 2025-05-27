@@ -74,7 +74,7 @@ function App() {
         style={{ gridTemplateAreas: getGridTemplateAreas() }}
       >
         {streams.map((stream, index) => (
-          <div key={stream.id} style={{ gridArea: `s${index}` }}>
+          <div key={stream.id} style={{ gridArea: `s${index}`, width: '100%', height: '100%' }}>
             <StreamTile 
               stream={stream}
               onRemove={() => removeStream(stream.id)}

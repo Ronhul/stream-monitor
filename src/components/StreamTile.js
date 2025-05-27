@@ -53,6 +53,7 @@ const StreamTile = ({ stream, onRemove, onToggleAudio }) => {
             onLoad={() => setIsLoading(false)}
             ref={videoRef}
             title={`YouTube Stream ${stream.id}`}
+            style={{width: '100%', height: '100%', border: 'none'}}
           />
         );
 
@@ -72,6 +73,7 @@ const StreamTile = ({ stream, onRemove, onToggleAudio }) => {
             onLoad={() => setIsLoading(false)}
             ref={videoRef}
             title={`Twitch Stream ${stream.id}`}
+            style={{width: '100%', height: '100%', border: 'none'}}
           />
         );
 
@@ -86,6 +88,7 @@ const StreamTile = ({ stream, onRemove, onToggleAudio }) => {
               onLoad={() => setIsLoading(false)}
               ref={videoRef}
               title={`Telegram Stream ${stream.id}`}
+              style={{width: '100%', height: '100%', border: 'none'}}
             />
           </div>
         );

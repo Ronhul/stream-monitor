@@ -23,6 +23,21 @@ A React-based application for monitoring multiple video streams simultaneously. 
 3. Enter the URL of the stream
 4. Click "Add Stream"
 
+#### Supported URL Formats
+
+**YouTube:**
+- Regular YouTube URLs: https://www.youtube.com/watch?v=VIDEO_ID
+- Short YouTube URLs: https://youtu.be/VIDEO_ID
+- YouTube Embed URLs: https://www.youtube.com/embed/VIDEO_ID
+
+**Twitch:**
+- Channel URLs: https://www.twitch.tv/CHANNEL_NAME
+- Channel name only: Just enter the Twitch username (e.g., "ninja")
+- Player URLs: https://player.twitch.tv/?channel=CHANNEL_NAME
+
+**Telegram:**
+- Public channel video URLs: https://t.me/CHANNEL_NAME/VIDEO_ID
+
 ### Managing Streams
 
 - Click the mute/unmute button (🔇/🔊) to toggle audio for a particular stream

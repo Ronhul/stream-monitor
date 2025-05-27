@@ -19,17 +19,28 @@ const StreamTile = ({ stream, onRemove, onToggleAudio }) => {
     setError(null);
     
     try {
-      // Specific setup based on stream type
+      // Validate the stream URL before attempting to load
       switch(stream.type) {
         case 'youtube':
-          // YouTube embeds handle their own loading
+          const youtubeId = extractYoutubeId(stream.url);
+          if (!youtubeId) {
+            setError('Invalid YouTube URL. Please check the URL and try again.');
+          }
           break;
+          
         case 'twitch':
-          // Twitch embeds handle their own loading
+          const twitchChannel = extractTwitchChannel(stream.url);
+          if (!twitchChannel) {
+            setError('Invalid Twitch URL. Please provide a valid channel URL or name.');
+          }
           break;
+          
         case 'telegram':
-          // Telegram embeds handle their own loading
+          if (!stream.url || !stream.url.includes('t.me')) {
+            setError('Invalid Telegram URL. Please check the URL and try again.');
+          }
           break;
+          
         default:
           setError('Unsupported stream type');
       }
@@ -60,17 +71,42 @@ const StreamTile = ({ stream, onRemove, onToggleAudio }) => {
       case 'twitch':
         // Format: https://player.twitch.tv/?channel=CHANNEL_NAME&parent=localhost
         const twitchChannel = extractTwitchChannel(stream.url);
-        // Get domain for Twitch parent parameter
-        const domain = window.location.hostname === 'localhost' ? 
-          'localhost' : window.location.hostname.replace(/.*\.github\.io$/, 'github.io');
+        
+        if (!twitchChannel) {
+          setError('Invalid Twitch URL. Please provide a valid Twitch channel URL.');
+          setIsLoading(false);
+          return <div className="error-message">Invalid Twitch URL</div>;
+        }
+        
+        // Get all possible parent domains
+        // Twitch allows multiple parent domains separated by "&parent="
+        const currentDomain = window.location.hostname;
+        let parentDomains = ['localhost', '127.0.0.1']; // Common local testing domains
+        
+        // Add the actual domain if it's not localhost
+        if (currentDomain !== 'localhost' && currentDomain !== '127.0.0.1') {
+          // If GitHub pages, just use "github.io" which covers all subdomains
+          if (currentDomain.includes('github.io')) {
+            parentDomains.push('github.io');
+          } else {
+            parentDomains.push(currentDomain);
+          }
+        }
+        
+        // Format all domains as parent parameters
+        const parentParams = parentDomains.map(domain => `parent=${domain}`).join('&');
         
         return (
           <iframe
-            src={`https://player.twitch.tv/?channel=${twitchChannel}&parent=${domain}&muted=${stream.muted}`}
+            src={`https://player.twitch.tv/?channel=${twitchChannel}&${parentParams}&muted=${stream.muted ? 'true' : 'false'}`}
             frameBorder="0"
             allowFullScreen
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             onLoad={() => setIsLoading(false)}
+            onError={() => {
+              setError('Failed to load Twitch stream');
+              setIsLoading(false);
+            }}
             ref={videoRef}
             title={`Twitch Stream ${stream.id}`}
             style={{width: '100%', height: '100%', border: 'none'}}
@@ -106,9 +142,33 @@ const StreamTile = ({ stream, onRemove, onToggleAudio }) => {
   };
 
   const extractTwitchChannel = (url) => {
-    const twitchRegExp = /(?:https?:\/\/)?(?:www\.|go\.)?twitch\.tv\/([a-z0-9_]+)($|\/)/;
-    const match = url.match(twitchRegExp);
-    return match ? match[1] : null;
+    if (!url) return null;
+    
+    // Handle pasted channel name directly (without URL)
+    if (/^[a-zA-Z0-9_]{4,25}$/.test(url.trim())) {
+      return url.trim().toLowerCase();
+    }
+    
+    // Handle various Twitch URL formats
+    const patterns = [
+      // Standard format: https://www.twitch.tv/channelname
+      /(?:https?:\/\/)?(?:www\.|go\.)?twitch\.tv\/([a-zA-Z0-9_]{4,25})(?:$|\/|\?)/,
+      
+      // Player URL: https://player.twitch.tv/?channel=channelname
+      /(?:https?:\/\/)?player\.twitch\.tv\/\?.*channel=([a-zA-Z0-9_]{4,25})(?:$|&)/,
+      
+      // Clip format: https://clips.twitch.tv/channelname/etc
+      /(?:https?:\/\/)?clips\.twitch\.tv\/([a-zA-Z0-9_]{4,25})(?:$|\/|\?)/
+    ];
+    
+    for (const pattern of patterns) {
+      const match = url.match(pattern);
+      if (match && match[1]) {
+        return match[1].toLowerCase();
+      }
+    }
+    
+    return null;
   };
 
   return (

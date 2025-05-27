@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "source": "**/*.{html,css,js,json}",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ]
+}

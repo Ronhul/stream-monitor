@@ -1,0 +1,50 @@
+{
+  "name": "stream-monitor",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://USERNAME.github.io/StreamMonitor",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^5.0.1"
+  },
+  "overrides": {
+    "nth-check": "^2.0.1",
+    "postcss": "^8.4.31",
+    "svgo": "^2.8.0"
+  },
+  "scripts": {
+    "start": "cross-env BROWSER=none DANGEROUSLY_DISABLE_HOST_CHECK=true WDS_SOCKET_HOST=localhost react-scripts start",
+    "start-direct": "node node_modules/react-scripts/scripts/start.js",
+    "start-wsl": "BROWSER=none DANGEROUSLY_DISABLE_HOST_CHECK=true WDS_SOCKET_HOST=localhost node node_modules/react-scripts/scripts/start.js",
+    "start-js": "node start.js",
+    "build": "cross-env react-scripts build",
+    "test": "cross-env react-scripts test",
+    "eject": "cross-env react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}

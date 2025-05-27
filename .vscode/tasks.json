@@ -1,0 +1,95 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start StreamMonitor Development Server",
+      "type": "shell",
+      "command": "npm start",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "."
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Starting the development server",
+          "endsPattern": "Compiled successfully|Failed to compile"
+        }
+      }
+    },
+    {
+      "label": "Start StreamMonitor (WSL Compatible)",
+      "type": "shell",
+      "command": "./run-in-wsl.sh",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "."
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Starting the development server",
+          "endsPattern": "Compiled successfully|Failed to compile"
+        }
+      }
+    },
+    {
+      "label": "Start StreamMonitor (Windows Batch)",
+      "type": "shell",
+      "command": "start-windows.bat",
+      "group": "build",
+      "isBackground": true,
+      "windows": {
+        "command": ".\\start-windows.bat"
+      },
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "."
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Starting the development server",
+          "endsPattern": "Compiled successfully|Failed to compile"
+        }
+      }
+    },
+    {
+      "label": "Start StreamMonitor (Cross-platform)",
+      "type": "shell",
+      "command": "npm run start-js",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "."
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Starting the development server",
+          "endsPattern": "Compiled successfully|Failed to compile"
+        }
+      }
+    },
+    {
+      "label": "Build StreamMonitor for Production",
+      "type": "shell",
+      "command": "npm run build",
+      "group": "build"
+    },
+    {
+      "label": "Install Dependencies",
+      "type": "shell",
+      "command": "npm install",
+      "group": "none"
+    }
+  ]
+}

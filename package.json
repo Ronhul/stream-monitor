@@ -16,15 +16,16 @@
     "svgo": "^2.8.0"
   },
   "scripts": {
-    "start": "cross-env BROWSER=none DANGEROUSLY_DISABLE_HOST_CHECK=true WDS_SOCKET_HOST=localhost react-scripts start",
-    "start-direct": "node node_modules/react-scripts/scripts/start.js",
-    "start-wsl": "BROWSER=none DANGEROUSLY_DISABLE_HOST_CHECK=true WDS_SOCKET_HOST=localhost node node_modules/react-scripts/scripts/start.js",
-    "start-js": "node start.js",
-    "build": "cross-env react-scripts build",
+    "start": "node ./update-version.js && cross-env BROWSER=none DANGEROUSLY_DISABLE_HOST_CHECK=true WDS_SOCKET_HOST=localhost react-scripts start",
+    "start-direct": "node ./update-version.js && node node_modules/react-scripts/scripts/start.js",
+    "start-wsl": "node ./update-version.js && BROWSER=none DANGEROUSLY_DISABLE_HOST_CHECK=true WDS_SOCKET_HOST=localhost node node_modules/react-scripts/scripts/start.js",
+    "start-js": "node ./update-version.js && node start.js",
+    "build": "node ./update-version.js && cross-env react-scripts build",
     "test": "cross-env react-scripts test",
     "eject": "cross-env react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "update-version": "node ./update-version.js"
   },
   "eslintConfig": {
     "extends": [

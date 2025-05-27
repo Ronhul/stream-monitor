@@ -2,6 +2,8 @@
 
 A React-based application for monitoring multiple video streams simultaneously. This application allows users to view up to 8 different streaming sources at once (YouTube, Twitch, Telegram) in a responsive tile layout.
 
+**Current Version:** 0.1.0
+
 ## Features
 
 - Display up to 8 different stream sources in a responsive grid
@@ -32,6 +34,42 @@ A React-based application for monitoring multiple video streams simultaneously. 
 - Uses Web Audio API for sound level visualization
 - Responsive layout that adjusts according to the number of active streams
 - Containerized iframes for external stream sources
+
+## Versioning
+
+The StreamMonitor app follows semantic versioning (MAJOR.MINOR.PATCH):
+
+- MAJOR version changes indicate incompatible API changes
+- MINOR version changes indicate added functionality in a backward compatible manner
+- PATCH version changes indicate backward compatible bug fixes
+
+The current version is displayed in the top-right corner of the application. The version is automatically synchronized between package.json and the application during build.
+
+### Version History
+
+- 0.1.0 - Initial release with basic functionality for monitoring multiple streams
+
+### Updating Version
+
+To update the version, use the provided `bump-version.sh` script:
+
+```bash
+# For a patch update (0.1.0 -> 0.1.1)
+./bump-version.sh patch
+
+# For a minor update (0.1.0 -> 0.2.0)
+./bump-version.sh minor
+
+# For a major update (0.1.0 -> 1.0.0)
+./bump-version.sh major
+```
+
+The script will:
+1. Update the version in package.json
+2. Update the version.js file with the new version and current build date
+3. Display the new version number
+
+Note: The version is also automatically updated during npm start, build, and deploy commands.
 
 ## Getting Started
 

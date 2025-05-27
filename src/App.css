@@ -22,12 +22,30 @@ header p {
   opacity: 0.8;
 }
 
+.version-info {
+  font-size: 12px;
+  color: #61dafb;
+  opacity: 0.7;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.version-info small {
+  font-size: 10px;
+  opacity: 0.8;
+}
+
 .stream-grid {
   display: grid;
-  grid-template-columns: 4fr 4fr 2fr;
-  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 15px;
   height: calc(100vh - 120px);
   overflow: auto;
+  max-width: 100%;
 }
 
 .add-stream-container {
@@ -37,6 +55,17 @@ header p {
   justify-content: center;
   align-items: center;
   padding: 20px;
+}
+
+@media (max-width: 1200px) {
+  .stream-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: none !important;
+  }
+  
+  .stream-grid > div {
+    grid-area: auto !important;
+  }
 }
 
 @media (max-width: 768px) {

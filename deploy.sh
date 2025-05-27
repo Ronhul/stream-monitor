@@ -10,6 +10,10 @@ NC='\033[0m' # No Color
 echo -e "${YELLOW}StreamMonitor GitHub Pages Deployment Script${NC}"
 echo -e "${YELLOW}==========================================${NC}"
 
+# Update version information
+echo -e "${YELLOW}Updating version information...${NC}"
+node ./update-version.js
+
 # Check for pending changes
 if [[ -n $(git status -s) ]]; then
   echo -e "${RED}Error: You have pending changes. Please commit or stash them before deploying.${NC}"
